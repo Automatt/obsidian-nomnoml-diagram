@@ -6,6 +6,7 @@ import {
 } from 'obsidian';
 
 import * as nomnoml from 'nomnoml';
+import panzoom from '@panzoom/panzoom';
 
 interface NomnomlDiagramSettings {
 	// nomnoml's directive options are prefixed with # for convenience
@@ -104,6 +105,19 @@ export default class NomnomlDiagram extends Plugin {
 						nomnoml.renderSvg(toRender),
 					`</div>`,
 				].join('');
+				setTimeout(() => {
+					const diagramContainer = el.querySelector('.nomnoml-diagram-container');
+					const panzoomInstance = panzoom(diagramContainer as HTMLElement, {
+						minScale: 0.5,
+						maxScale: 10,
+						smoothScroll: true,
+						zoomDoubleClickSpeed: 500,
+						zoomOnDoubleClick: true,
+						zoomOnDoubleClickSpeed: 500,
+					});
+
+					diagramContainer.addEventListener('wheel', panzoomInstance.zoomWithWheel);
+				}, 0);
 			} catch (err) {
 				el.innerHTML = [
 					`<div class="nomnoml-diagram-container">Possible Syntax Error: `,
