@@ -112,11 +112,23 @@ export default class NomnomlDiagram extends Plugin {
 						maxScale: 10,
 						smoothScroll: true,
 						zoomDoubleClickSpeed: 500,
-						zoomOnDoubleClick: true,
-						zoomOnDoubleClickSpeed: 500,
+						zoomOnDoubleClick: false, // Disable default zoom on double-click
 					});
 
 					diagramContainer.addEventListener('wheel', panzoomInstance.zoomWithWheel);
+					diagramContainer.addEventListener('dblclick', () => {
+						const svg = diagramContainer.querySelector('svg');
+						if (svg) {
+							const svgRect = svg.getBoundingClientRect();
+							const containerRect = diagramContainer.getBoundingClientRect();
+							const centerX = (svgRect.width - containerRect.width) / 2;
+							const centerY = (svgRect.height - containerRect.height) / 2;
+							panzoomInstance.pan(-centerX, -centerY);
+							panzoomInstance.zoom(1, { animate: true });
+						}
+					});
+					
+					
 				}, 0);
 			} catch (err) {
 				el.innerHTML = [
