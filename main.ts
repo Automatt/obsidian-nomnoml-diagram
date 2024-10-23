@@ -39,7 +39,7 @@ const DEFAULT_SETTINGS: NomnomlDiagramSettings = {
 	'#gravity':    '',
 	'#edges':      'rounded',
 	'#background': '#ffffff',
-	'#fill':       '',
+	'#fill':       '#f8f8fa; #e5e6eb',
 	'#fillArrows': false,
 	'#font':       '',
 	'#fontSize':   '',
@@ -283,7 +283,7 @@ class NomnomlDiagramSettingTab extends PluginSettingTab {
 			.setDesc('#fill directive')
 			.addText(text => (
 				text
-					.setPlaceholder('#eee8d5; #fdf6e3')
+					.setPlaceholder('#f8f8fa; #e5e6eb')
 					.setValue(this.plugin.settings['#fill'])
 					.onChange(async (value) => {
 						this.plugin.settings['#fill'] = value;
